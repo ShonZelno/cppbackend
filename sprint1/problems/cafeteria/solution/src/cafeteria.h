@@ -24,19 +24,15 @@ public:
     }
 
     void OrderHotDog(HotDogHandler handler) {
-        // Уникальный ID для этого заказа
         static std::atomic<int> next_hotdog_id{1};
         int hotdog_id = next_hotdog_id++;
         
-        // Получаем ингредиенты
         auto sausage = store_.GetSausage();
         auto bread = store_.GetBread();
         
-        // Создаём strand для этого заказа
         auto strand = std::make_shared<net::strand<net::io_context::executor_type>>(
             net::make_strand(io_));
         
-        // Состояние для этого заказа
         struct OrderState {
             std::atomic<bool> sausage_ready{false};
             std::atomic<bool> bread_ready{false};
@@ -49,7 +45,6 @@ public:
         
         // Функция для создания хот-дога
         auto try_make_hotdog = [strand, handler, state, sausage, bread]() {
-            // Проверяем, оба ли ингредиента готовы и не завершён ли уже заказ
             bool sausage_ready = state->sausage_ready.load();
             bool bread_ready = state->bread_ready.load();
             bool expected = false;
@@ -92,7 +87,6 @@ public:
                 timer->async_wait([sausage, strand, state, try_make_hotdog, timer]
                                 (const sys::error_code& ec) {
                     if (ec) {
-                        // Таймер отменён, ничего не делаем
                         return;
                     }
                     
@@ -101,7 +95,6 @@ public:
                         state->sausage_ready.store(true);
                         net::post(*strand, try_make_hotdog);
                     } catch (const std::exception& e) {
-                        // В случае ошибки всё равно отмечаем как готовую
                         state->sausage_ready.store(true);
                         net::post(*strand, try_make_hotdog);
                     }
@@ -124,7 +117,6 @@ public:
                 timer->async_wait([bread, strand, state, try_make_hotdog, timer]
                                 (const sys::error_code& ec) {
                     if (ec) {
-                        // Таймер отменён, ничего не делаем
                         return;
                     }
                     
@@ -133,7 +125,6 @@ public:
                         state->bread_ready.store(true);
                         net::post(*strand, try_make_hotdog);
                     } catch (const std::exception& e) {
-                        // В случае ошибки всё равно отмечаем как готовую
                         state->bread_ready.store(true);
                         net::post(*strand, try_make_hotdog);
                     }
