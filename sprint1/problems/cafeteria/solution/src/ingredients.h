@@ -146,5 +146,5 @@ public:
     }
 
 private:
-    int next_id_ = 0;
+    static inline int next_id_ = 0; 
 };
