@@ -43,6 +43,8 @@ void PrintHotDogResult(const Result<HotDog>& result, Clock::duration order_durat
         os << "Hot dog #" << hot_dog.GetId()
            << ": bread bake time: " << as_seconds(hot_dog.GetBread().GetBakingDuration())
            << "s, sausage bake time: " << as_seconds(hot_dog.GetSausage().GetCookDuration()) << "s"
+           << " [bread_id=" << hot_dog.GetBread().GetId() 
+           << ", sausage_id=" << hot_dog.GetSausage().GetId() << "]"  // Добавьте эту строку
            << std::endl;
     } else {
         try {

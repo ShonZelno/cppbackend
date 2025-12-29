@@ -138,13 +138,12 @@ private:
 class Store {
 public:
     std::shared_ptr<Bread> GetBread() {
-        return std::make_shared<Bread>(++next_id_);
+        static int next_bread_id = 0;
+        return std::make_shared<Bread>(++next_bread_id);
     }
 
     std::shared_ptr<Sausage> GetSausage() {
-        return std::make_shared<Sausage>(++next_id_);
+        static int next_sausage_id = 0;
+        return std::make_shared<Sausage>(++next_sausage_id);
     }
-
-private:
-    static inline int next_id_ = 0; 
 };

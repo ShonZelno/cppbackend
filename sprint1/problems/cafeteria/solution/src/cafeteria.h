@@ -38,37 +38,49 @@ public:
         
         // Состояние для этого заказа
         struct OrderState {
-            bool sausage_ready = false;
-            bool bread_ready = false;
-            std::optional<Result<HotDog>> result;
+            std::atomic<bool> sausage_ready{false};
+            std::atomic<bool> bread_ready{false};
+            std::atomic<bool> completed{false};
             int hotdog_id;
         };
         
         auto state = std::make_shared<OrderState>();
         state->hotdog_id = hotdog_id;
         
-        // Функция для создания хот-дога, когда оба ингредиента готовы
+        // Функция для создания хот-дога
         auto try_make_hotdog = [strand, handler, state, sausage, bread]() {
-            if (state->sausage_ready && state->bread_ready && !state->result) {
+            // Проверяем, оба ли ингредиента готовы и не завершён ли уже заказ
+            bool sausage_ready = state->sausage_ready.load();
+            bool bread_ready = state->bread_ready.load();
+            bool expected = false;
+            
+            if (sausage_ready && bread_ready && 
+                state->completed.compare_exchange_strong(expected, true)) {
+                
                 try {
                     // Создаём хот-дог
                     HotDog hot_dog{state->hotdog_id, sausage, bread};
-                    state->result = Result<HotDog>{std::move(hot_dog)};
-                    net::post(*strand, [handler, result = *state->result]() mutable {
-                        handler(std::move(result));
+                    net::post(*strand, [handler, hot_dog = std::move(hot_dog)]() mutable {
+                        handler(Result<HotDog>{std::move(hot_dog)});
                     });
                 } catch (const std::exception& e) {
-                    state->result = Result<HotDog>{std::make_exception_ptr(e)};
-                    net::post(*strand, [handler, result = *state->result]() mutable {
-                        handler(std::move(result));
+                    net::post(*strand, [handler, e]() {
+                        handler(Result<HotDog>{std::make_exception_ptr(e)});
                     });
                 } catch (...) {
-                    state->result = Result<HotDog>::FromCurrentException();
-                    net::post(*strand, [handler, result = *state->result]() mutable {
-                        handler(std::move(result));
+                    net::post(*strand, [handler]() {
+                        handler(Result<HotDog>::FromCurrentException());
                     });
                 }
             }
+        };
+        
+        // Обработчик ошибок
+        auto on_error = [strand, handler](const std::string& error_msg) {
+            net::post(*strand, [handler, error_msg]() {
+                handler(Result<HotDog>{std::make_exception_ptr(
+                    std::runtime_error(error_msg))});
+            });
         };
         
         // Готовим сосиску
@@ -79,23 +91,27 @@ public:
                 
                 timer->async_wait([sausage, strand, state, try_make_hotdog, timer]
                                 (const sys::error_code& ec) {
-                    if (ec) return;
+                    if (ec) {
+                        // Таймер отменён, ничего не делаем
+                        return;
+                    }
                     
                     try {
                         sausage->StopFry();
-                        state->sausage_ready = true;
+                        state->sausage_ready.store(true);
                         net::post(*strand, try_make_hotdog);
-                    } catch (...) {
-                        state->sausage_ready = true;
+                    } catch (const std::exception& e) {
+                        // В случае ошибки всё равно отмечаем как готовую
+                        state->sausage_ready.store(true);
                         net::post(*strand, try_make_hotdog);
                     }
                 });
             });
+        } catch (const std::exception& e) {
+            on_error(std::string("Failed to start frying sausage: ") + e.what());
+            return;
         } catch (...) {
-            // Если не удалось начать готовить сосиску, сразу возвращаем ошибку
-            net::post(*strand, [handler]() {
-                handler(Result<HotDog>::FromCurrentException());
-            });
+            on_error("Failed to start frying sausage: unknown error");
             return;
         }
         
@@ -107,23 +123,27 @@ public:
                 
                 timer->async_wait([bread, strand, state, try_make_hotdog, timer]
                                 (const sys::error_code& ec) {
-                    if (ec) return;
+                    if (ec) {
+                        // Таймер отменён, ничего не делаем
+                        return;
+                    }
                     
                     try {
                         bread->StopBaking();
-                        state->bread_ready = true;
+                        state->bread_ready.store(true);
                         net::post(*strand, try_make_hotdog);
-                    } catch (...) {
-                        state->bread_ready = true;
+                    } catch (const std::exception& e) {
+                        // В случае ошибки всё равно отмечаем как готовую
+                        state->bread_ready.store(true);
                         net::post(*strand, try_make_hotdog);
                     }
                 });
             });
+        } catch (const std::exception& e) {
+            on_error(std::string("Failed to start baking bread: ") + e.what());
+            return;
         } catch (...) {
-            // Если не удалось начать готовить булку, нужно попытаться освободить сосиску
-            net::post(*strand, [handler]() {
-                handler(Result<HotDog>::FromCurrentException());
-            });
+            on_error("Failed to start baking bread: unknown error");
             return;
         }
     }
