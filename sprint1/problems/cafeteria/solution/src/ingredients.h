@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <optional>
+#include <atomic> 
 
 #include "clock.h"
 #include "gascooker.h"
@@ -137,13 +138,17 @@ private:
 // Склад ингредиентов (возвращает ингредиенты с уникальным id)
 class Store {
 public:
+	Store() : next_bread_id_{0}, next_sausage_id_{0} {} 
+
     std::shared_ptr<Bread> GetBread() {
-        static int next_bread_id = 0;
-        return std::make_shared<Bread>(++next_bread_id);
+        return std::make_shared<Bread>(++next_bread_id_);
     }
 
     std::shared_ptr<Sausage> GetSausage() {
-        static int next_sausage_id = 0;
-        return std::make_shared<Sausage>(++next_sausage_id);
+        return std::make_shared<Sausage>(++next_sausage_id_);
     }
+	
+private:
+    std::atomic<int> next_bread_id_;  
+    std::atomic<int> next_sausage_id_;
 };
