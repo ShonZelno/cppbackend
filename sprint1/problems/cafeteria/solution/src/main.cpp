@@ -133,6 +133,9 @@ int main() {
     auto hotdogs = PrepareHotDogs(num_orders, num_threads);
     const auto cook_duration = Clock::now() - start_time;
 
+    std::cout << "Cook duration: " << duration_cast<duration<double>>(cook_duration).count() << 's'
+              << std::endl;
+
     assert(hotdogs.size() == num_orders);
     assert(cook_duration >= 7s && cook_duration <= 7.5s);
 
