@@ -70,6 +70,7 @@ model::Game LoadGame(const std::filesystem::path& json_path) {
     // Загрузить содержимое файла json_path, например, в виде строки
     // Распарсить строку как JSON, используя boost::json::parse
     // Загрузить модель игры из файла
+    try{
     std::string text{ReadFile(json_path)};
     auto mapJson = json::parse(text);
     model::Game game;
@@ -84,6 +85,10 @@ model::Game LoadGame(const std::filesystem::path& json_path) {
         game.AddMap(std::move(map));
     }
     return game;
+    }catch(...){
+        std::cout << "Error: Can't pars json file." << std::endl;  
+        std::exit(1);
+    }
 };
 
 }  // namespace json_loader
