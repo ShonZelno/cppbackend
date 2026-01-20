@@ -10,6 +10,9 @@ RUN apt update && \
     && \
     pip3 install conan
 
+# СОЗДАЕМ DEFAULT ПРОФИЛЬ CONAN
+RUN conan profile detect --force	
+
 # копируем conanfile.txt в контейнер и запускаем conan install
 COPY conanfile.txt /app/
 RUN mkdir /app/build && cd /app/build && \
