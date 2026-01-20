@@ -16,7 +16,7 @@ RUN conan profile detect --force
 # копируем conanfile.txt в контейнер и запускаем conan install
 COPY conanfile.txt /app/
 RUN mkdir /app/build && cd /app/build && \
-    conan install .. --build=missing -s compiler.libcxx=libstdc++11 -s build_type=Release
+    conan install .. --build=missing --build b2 -s compiler.libcxx=libstdc++11 -s build_type=Release
 
 # только после этого копируем остальные иходники
 COPY ./src /app/src
