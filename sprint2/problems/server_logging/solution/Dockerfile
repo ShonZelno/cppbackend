@@ -4,7 +4,7 @@ FROM gcc:11.3 as build
 
 # Выполнить установку зависимостей внутри контейнера.
 RUN apt update && \
-    apt install -y \
+    apt install -y --fix-missing \
       python3-pip \
       cmake \
     && \
