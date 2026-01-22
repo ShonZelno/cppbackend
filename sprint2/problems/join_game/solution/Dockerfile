@@ -8,7 +8,10 @@ RUN apt update && \
       python3-pip \
       cmake \
     && \
-    pip3 install conan
+    pip3 install conan==1.* 
+
+# СОЗДАЕМ DEFAULT ПРОФИЛЬ CONAN (для Conan 1.x)
+#RUN conan profile new default --detect --force 2>/dev/null || true	
 
 # копируем conanfile.txt в контейнер и запускаем conan install
 COPY conanfile.txt /app/
@@ -17,9 +20,9 @@ RUN mkdir /app/build && cd /app/build && \
 
 # только после этого копируем остальные иходники
 COPY ./src /app/src
-COPY ./data /app/data
-COPY ./static /app/static
 COPY CMakeLists.txt /app/
+# COPY ./data /app/data
+# COPY ./static /app/static
 
 RUN cd /app/build && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && \
