@@ -29,7 +29,6 @@ add_executable(game_server
 	src/model/support_types.cpp
 	src/json/json_loader.cpp
 	src/json/json_converter.cpp
-	src/request_handlers/request_handler.cpp
 	src/utils/request_handlers_utils.cpp
 	src/utils/filesystem_utils.cpp
 	src/utils/random_generators.cpp

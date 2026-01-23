@@ -32,7 +32,8 @@ public:
             ::GetInstance()
             .Execute(req, application_, std::move(send))) {
             return;
-        } else if(rh_storage::StaticFileRequestHandlerExecutor<http::request<Body, http::basic_fields<Allocator>>, Send>
+        } 
+        if(rh_storage::StaticFileRequestHandlerExecutor<http::request<Body, http::basic_fields<Allocator>>, Send>
             ::GetInstance()
             .Execute(req, static_content_root_path_, std::move(send))) {
             return;

@@ -64,7 +64,7 @@ int main(int argc, const char* argv[]) {
         });
 
         // 5. Создаём обработчик HTTP-запросов и связываем его с моделью игры, задаем путь до статического контента.
-        http_handler::RequestHandler handler{application, sc_root_path};
+        http_handler::RequestHandler handler{application, sc_root_path, ioc};
 
         // 6. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
         const auto address = net::ip::make_address("0.0.0.0");

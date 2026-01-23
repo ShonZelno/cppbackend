@@ -1,5 +1,6 @@
 #include "map.h"
 #include "model_key_storage.h"
+#include "logger.h"
 
 #include <stdexcept>
 
@@ -106,7 +107,10 @@ Map tag_invoke(json::value_to_tag<Map>, const json::value& jv) {
     try {
         double dog_velocity = json::value_to<double>(jv.as_object().at(MAP_DOG_VELOCITY));
         map.SetDogVelocity(dog_velocity);
-    } catch(...) {}
+    } catch(...) {
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("error double"sv,
+           logware::ExitCodeLogData(EXIT_FAILURE));
+    }
     return map;
 };
 
