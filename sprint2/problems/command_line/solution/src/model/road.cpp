@@ -1,5 +1,6 @@
 #include "road.h"
 #include "model_key_storage.h"
+#include "logger.h"
 
 namespace model {
 
@@ -24,6 +25,8 @@ Road tag_invoke(json::value_to_tag<Road>, const json::value& jv) {
         end = json::value_to<int>(jv.as_object().at(ROAD_X1));
         return Road(Road::HORIZONTAL, start, end);
     } catch (...) {
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("error ROAD_X1"sv,
+           logware::ExitCodeLogData(EXIT_FAILURE));
         end = json::value_to<int>(jv.as_object().at(ROAD_Y1));
         return Road(Road::VERTICAL, start, end);
     }

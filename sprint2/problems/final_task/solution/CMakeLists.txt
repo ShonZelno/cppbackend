@@ -17,6 +17,8 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_executable(game_server
 	src/main.cpp
 	src/model/map.cpp
