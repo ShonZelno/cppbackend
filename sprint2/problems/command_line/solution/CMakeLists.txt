@@ -17,6 +17,8 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_executable(game_server
 	src/main.cpp
 	src/model/map.cpp
@@ -29,6 +31,7 @@ add_executable(game_server
 	src/model/support_types.cpp
 	src/json/json_loader.cpp
 	src/json/json_converter.cpp
+	src/request_handlers/request_handler.cpp
 	src/utils/request_handlers_utils.cpp
 	src/utils/filesystem_utils.cpp
 	src/utils/random_generators.cpp

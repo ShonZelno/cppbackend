@@ -1,1 +1,1 @@
-./build/bin/game_server --tick-period 150 --config-file data/config.json --www-root ./static 
+./build/bin/game_server --tick-period 120 --config-file data/config.json --www-root ./static 

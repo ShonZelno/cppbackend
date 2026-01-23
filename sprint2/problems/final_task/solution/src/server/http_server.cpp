@@ -51,7 +51,7 @@ void SessionBase::OnWrite(bool close, beast::error_code ec, [[maybe_unused]] std
     }
     // Считываем следующий запрос
     Read();
-}
+} 
 
 void SessionBase::Close() {
     beast::error_code ec;
