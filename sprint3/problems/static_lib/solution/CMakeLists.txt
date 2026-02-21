@@ -99,7 +99,7 @@ target_include_directories(catch_tests PRIVATE
 target_link_libraries(catch_tests 
     PRIVATE 
         CONAN_PKG::catch2
-        GameModelLib  # Теперь тесты тоже линкуются с библиотекой
+        GameModelLib 
 )
 
 # Boost.Beast будет использовать std::string_view вместо boost::string_view
