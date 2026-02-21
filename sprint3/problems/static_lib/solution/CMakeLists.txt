@@ -24,22 +24,25 @@ find_package(Threads REQUIRED)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(game_server
-	src/main.cpp
-	src/model/map.cpp
+add_library(GameModelLib STATIC 
+src/model/map.cpp
 	src/model/game.cpp
 	src/model/dog.cpp
 	src/model/roadmap.cpp
 	src/model/support_types.cpp
 	src/model/loot_generator.cpp
 	src/model/lost_object.cpp
+	src/utils/request_handlers_utils.cpp
+	src/utils/filesystem_utils.cpp
+	src/utils/random_generators.cpp
+)
+
+add_executable(game_server
+	src/main.cpp	
 	src/json/json_loader.cpp
 	src/json/json_converter.cpp
 	src/json/json_model_converter.cpp
 	src/request_handlers/request_handler.cpp
-	src/utils/request_handlers_utils.cpp
-	src/utils/filesystem_utils.cpp
-	src/utils/random_generators.cpp
 	src/boost_json.cpp
 	src/logging/logging_data_storage.cpp
 	src/logging/logger.cpp
@@ -56,20 +59,21 @@ target_include_directories(game_server PRIVATE
 	src
 	src/json
 	src/request_handlers
-	src/utils
 	src/logging
-	src/model
 	src/authentication
 	src/app
 	src/server
 	src/program_options
 	src/time_management
 	src/error_handling
-)
+
+target_link_libraries(game_server PRIVATE Threads::Threads CONAN_PKG::boost GameModelLib)
+
+include(CTest)
+include(${CONAN_BUILD_DIRS_CATCH2}/Catch.cmake)
+
 add_executable(catch_tests
 	tests/loot_generator_tests.cpp
-	src/model/loot_generator.cpp
-	src/model/loot_generator.h
 )
 target_link_libraries(game_server PRIVATE Threads::Threads CONAN_PKG::boost)
 target_link_libraries(catch_tests PRIVATE CONAN_PKG::catch2)
