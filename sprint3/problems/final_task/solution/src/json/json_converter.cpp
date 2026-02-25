@@ -87,8 +87,6 @@ namespace json_converter
 
     std::string CreateEmptyAuthorizationResponse()
     {
-        // json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
-        //                     {json_keys::RESPONSE_MESSAGE, "Authorization header is missing"}}; // todo: different messages
         json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
                            {json_keys::RESPONSE_MESSAGE, "Authorization header is required"}};
         return json::serialize(msg);
