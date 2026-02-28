@@ -29,9 +29,10 @@ namespace rh_storage
 
         Handler &GetHandler(http::verb method)
         {
-            if (auto ptr = handlers_.if_contains(method))
+            auto it = handlers_.find(method);
+            if (it != handlers_.end())
             {
-                return *ptr;
+                return it->second;
             }
             return not_found_handler_;
         };
