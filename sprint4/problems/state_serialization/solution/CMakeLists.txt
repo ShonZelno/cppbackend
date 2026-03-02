@@ -87,11 +87,11 @@ target_link_libraries(game_server PRIVATE Threads::Threads CONAN_PKG::boost game
 include(CTest)
 include(${CONAN_BUILD_DIRS_CATCH2}/Catch.cmake)
 
-add_executable(game_server_tests
+add_executable(loot_generator_tests
 	tests/loot-generator-tests.cpp
 )
-target_link_libraries(game_server_tests PRIVATE CONAN_PKG::catch2 game_model_lib)
-catch_discover_tests(game_server_tests)
+target_link_libraries(loot_generator_tests PRIVATE CONAN_PKG::catch2 game_model_lib)
+catch_discover_tests(loot_generator_tests)
 
 add_executable(collision_detection_tests
 	tests/collision-detector-tests.cpp
