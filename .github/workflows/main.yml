@@ -140,7 +140,7 @@ jobs:
           # cd cpp-backend-tests-practicum/scripts/sprint2
           # ./command_line/run.sh
 
-  sprint_3:
+  # sprint_3:
     # if: github.repository_owner != 'cpppracticum'
     # runs-on: ubuntu-22.04
     # steps:
@@ -255,8 +255,7 @@ jobs:
           # junit_files: ${{ github.workspace }}/*.xml
 
   
-  # sprint_4:
- 
+  sprint_4: 
     if: github.repository_owner != 'cpppracticum'
     runs-on: ubuntu-22.04
     steps:
