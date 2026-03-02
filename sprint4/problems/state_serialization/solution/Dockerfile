@@ -40,7 +40,7 @@ COPY ./data /app/data
 COPY ./static /app/static
 COPY --from=build /app/build/bin/game_server /app/
 COPY --from=build /app/build/bin/collision_detection_tests /app/
-COPY --from=build /app/build/bin/game_server_tests /app/
+COPY --from=build /app/build/bin/loot_generator_tests /app/
 COPY --from=build /app/build/bin/state_serialization_tests /app/
 
 
