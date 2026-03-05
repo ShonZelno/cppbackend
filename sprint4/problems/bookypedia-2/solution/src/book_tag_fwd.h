@@ -2,7 +2,8 @@
 
 namespace domain {
 
-class Tag;
-class TagRepository;
+class BookTag;
+
+class BookTagRepository;
 
 } // namespace domain

@@ -17,15 +17,20 @@ add_library(libbookypedia STATIC
 	src/use_cases.h
 	src/use_cases_impl.cpp
 	src/use_cases_impl.h
+	src/unit_of_work.h
 	src/author.cpp
 	src/author.h
+	src/author_fwd.h
 	src/book.cpp
 	src/book.h
-	src/author_fwd.h
 	src/book_fwd.h
+	src/book_tag.cpp
+	src/book_tag.h
+	src/book_tag_fwd.h
 	src/tagged.h
 	src/tagged_uuid.cpp
 	src/tagged_uuid.h
+	src/overload_pattern.h
 	src/postgres.cpp
 	src/postgres.h
 )
@@ -37,9 +42,3 @@ add_executable(bookypedia
 	src/main.cpp
 )
 target_link_libraries(bookypedia PRIVATE CONAN_PKG::boost libbookypedia)
-
-add_executable(tests
-	tests/use_case_tests.cpp
-	tests/tagged_uuid_tests.cpp
-)
-target_link_libraries(tests PRIVATE CONAN_PKG::catch2 CONAN_PKG::gtest libbookypedia)

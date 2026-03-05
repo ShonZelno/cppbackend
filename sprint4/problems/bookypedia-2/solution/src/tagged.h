@@ -4,14 +4,14 @@
 namespace util {
 
 /**
- * Вспомогательный шаблонный класс "Маркированный тип".
- * С его помощью можно описать строгий тип на основе другого типа.
- * Пример:
+ * Г‚Г±ГЇГ®Г¬Г®ГЈГ ГІГҐГ«ГјГ­Г»Г© ГёГ ГЎГ«Г®Г­Г­Г»Г© ГЄГ«Г Г±Г± "ГЊГ Г°ГЄГЁГ°Г®ГўГ Г­Г­Г»Г© ГІГЁГЇ".
+ * Г‘ ГҐГЈГ® ГЇГ®Г¬Г®Г№ГјГѕ Г¬Г®Г¦Г­Г® Г®ГЇГЁГ±Г ГІГј Г±ГІГ°Г®ГЈГЁГ© ГІГЁГЇ Г­Г  Г®Г±Г­Г®ГўГҐ Г¤Г°ГіГЈГ®ГЈГ® ГІГЁГЇГ .
+ * ГЏГ°ГЁГ¬ГҐГ°:
  *
- *  struct AddressTag{}; // метка типа для строки, хранящей адрес
+ *  struct AddressTag{}; // Г¬ГҐГІГЄГ  ГІГЁГЇГ  Г¤Г«Гї Г±ГІГ°Г®ГЄГЁ, ГµГ°Г Г­ГїГ№ГҐГ© Г Г¤Г°ГҐГ±
  *  using Address = util::Tagged<std::string, AddressTag>;
  *
- *  struct NameTag{}; // метка типа для строки, хранящей имя
+ *  struct NameTag{}; // Г¬ГҐГІГЄГ  ГІГЁГЇГ  Г¤Г«Гї Г±ГІГ°Г®ГЄГЁ, ГµГ°Г Г­ГїГ№ГҐГ© ГЁГ¬Гї
  *  using Name = util::Tagged<std::string, NameTag>;
  *
  *  struct Person {
@@ -23,7 +23,7 @@ namespace util {
  *  Address address{"4 Privet Drive, Little Whinging, Surrey, England"s};
  *
  * Person p1{name, address}; // OK
- * Person p2{address, name}; // Ошибка, Address и Name - разные типы
+ * Person p2{address, name}; // ГЋГёГЁГЎГЄГ , Address ГЁ Name - Г°Г Г§Г­Г»ГҐ ГІГЁГЇГ»
  */
 template <typename Value, typename Tag>
 class Tagged {
@@ -46,19 +46,19 @@ public:
         return value_;
     }
 
-    // Так в C++20 можно объявить оператор сравнения Tagged-типов
-    // Будет просто вызван соответствующий оператор для поля value_
+    // Г’Г ГЄ Гў C++20 Г¬Г®Г¦Г­Г® Г®ГЎГєГїГўГЁГІГј Г®ГЇГҐГ°Г ГІГ®Г° Г±Г°Г ГўГ­ГҐГ­ГЁГї Tagged-ГІГЁГЇГ®Гў
+    // ГЃГіГ¤ГҐГІ ГЇГ°Г®Г±ГІГ® ГўГ»Г§ГўГ Г­ Г±Г®Г®ГІГўГҐГІГ±ГІГўГіГѕГ№ГЁГ© Г®ГЇГҐГ°Г ГІГ®Г° Г¤Г«Гї ГЇГ®Г«Гї value_
     auto operator<=>(const Tagged<Value, Tag>&) const = default;
 
 private:
     Value value_;
 };
 
-// Хешер для Tagged-типа, чтобы Tagged-объекты можно было хранить в unordered-контейнерах
+// Г•ГҐГёГҐГ° Г¤Г«Гї Tagged-ГІГЁГЇГ , Г·ГІГ®ГЎГ» Tagged-Г®ГЎГєГҐГЄГІГ» Г¬Г®Г¦Г­Г® ГЎГ»Г«Г® ГµГ°Г Г­ГЁГІГј Гў unordered-ГЄГ®Г­ГІГҐГ©Г­ГҐГ°Г Гµ
 template <typename TaggedValue>
 struct TaggedHasher {
     size_t operator()(const TaggedValue& value) const {
-        // Возвращает хеш значения, хранящегося внутри value
+        // Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ ГµГҐГё Г§Г­Г Г·ГҐГ­ГЁГї, ГµГ°Г Г­ГїГ№ГҐГЈГ®Г±Гї ГўГ­ГіГІГ°ГЁ value
         return std::hash<typename TaggedValue::ValueType>{}(*value);
     }
 };
