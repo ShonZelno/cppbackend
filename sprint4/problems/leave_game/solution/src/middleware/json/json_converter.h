@@ -40,4 +40,5 @@ std::optional<int> ParseSetDeltaTimeRequest(const std::string &msg);
 
 std::string
 CreateRecordsResponse(const std::vector<app::RetiredRecord> &records);
+
 } // namespace json_converter

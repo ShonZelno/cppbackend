@@ -3,8 +3,8 @@
 namespace model {
 
 struct LootGeneratorConfig {
-    double period;
-    double probability;
+  double period;
+  double probability;
 };
 
-}
+} // namespace model

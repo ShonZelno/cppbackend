@@ -100,8 +100,7 @@ private:
                      util::TaggedHasher<model::Dog::Id>>
       dog_id_to_player_;
   std::shared_ptr<PgConnectionPool> db_pool_;
-  mutable std::mutex
-      application_mutex_; // для синхронизации доступа к общим данным
+  mutable std::mutex application_mutex_;
 
   void OnDogRetired(model::Dog::Id dog_id);
   void AddRetiredPlayer(const std::string &name, size_t score,

@@ -18,9 +18,8 @@ boost::json::value ReadFile(const std::filesystem::path &json_path) {
   if (!file.is_open()) {
     BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage(
         "error"sv,
-        logware::ExceptionLogData(
-            EXIT_FAILURE, "Error: Can't open file."sv,
-            "write something here"sv)); // todo: write message and handler.
+        logware::ExceptionLogData(EXIT_FAILURE, "Error: Can't open file."sv,
+                                  "write something here"sv));
     throw OpenConfigFileOfModelException();
   }
 
@@ -31,9 +30,6 @@ boost::json::value ReadFile(const std::filesystem::path &json_path) {
 };
 
 model::Game LoadGame(const std::filesystem::path &json_path) {
-  // Загрузить содержимое файла json_path, например, в виде строки
-  // Распарсить строку как JSON, используя boost::json::parse
-  // Загрузить модель игры из файла
   model::Game game;
   boost::json::value jsonVal = ReadFile(json_path);
   model::LootGeneratorConfig lootGenCfg =

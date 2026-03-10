@@ -8,4 +8,4 @@ namespace beast = boost::beast;
 
 void ReportError(beast::error_code ec, std::string_view what);
 
-}
+} // namespace error_report

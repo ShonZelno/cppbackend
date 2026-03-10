@@ -42,12 +42,9 @@ int main(int argc, const char *argv[]) {
   try {
     // 1. Загружаем карту из файла и построить модель игры
     model::Game game = json_loader::LoadGame(args.config_file);
-    // model::Game game = json_loader::LoadGame("../../data/config.json"); //
-    // for debug
 
     // 2. Устанавливаем путь до статического контента.
     fs::path sc_root_path{args.www_root};
-    // fs::path sc_root_path{"../../static"};
 
     // 3. Инициализируем io_context
     const unsigned num_threads = 2;

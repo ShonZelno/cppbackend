@@ -16,7 +16,6 @@ template <typename Request, typename Send> class ApiV1RequestHandlerExecutor {
       const Request &, std::shared_ptr<app::Application>, Send &&);
 
 public:
-  // убираем конструктор копирования
   ApiV1RequestHandlerExecutor(const ApiV1RequestHandlerExecutor &) = delete;
   ApiV1RequestHandlerExecutor &
   operator=(const ApiV1RequestHandlerExecutor &) = delete;
@@ -24,7 +23,6 @@ public:
   ApiV1RequestHandlerExecutor &
   operator=(ApiV1RequestHandlerExecutor &&) = delete;
 
-  // получение ссылки на единственный объект
   static ApiV1RequestHandlerExecutor &GetInstance() {
     static ApiV1RequestHandlerExecutor obj;
     return obj;

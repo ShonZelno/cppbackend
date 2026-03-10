@@ -104,7 +104,6 @@ void Application::UpdateGameState(const std::chrono::milliseconds &delta_time) {
                   });
     res_future.get();
   }
-  // Flush все pending DB записи синхронно
   {
     boost::promise<void> flush_promise;
     auto flush_future = flush_promise.get_future();
@@ -211,8 +210,7 @@ Application::GetSerializedData() {
           *session_ptr,
           self->game_session_to_token_player_pair_.at(session_ptr)));
     });
-    sessions_ser.push_back(
-        std::move(res_future.get())); // todo: not parallel solution, need fix.
+    sessions_ser.push_back(std::move(res_future.get()));
   };
   return sessions_ser;
 };
@@ -253,12 +251,10 @@ void Application::RestoreGame() {
     for (auto &player_ser : item.GetPlayersSerialize()) {
       auto player =
           std::make_shared<app::Player>(std::move(player_ser.Restore()));
-      // Установить join_time
       player->SetJoinTime(std::chrono::milliseconds(player_ser.GetJoinTime()));
 
       auto dog =
           std::make_shared<model::Dog>(std::move(player_ser.RestoreDog()));
-      // Установить idle_time собаки
       dog->SetIdleTime(std::chrono::milliseconds(
           player_ser.GetDogSerialization().GetIdleTime()));
 
