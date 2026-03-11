@@ -46,8 +46,7 @@ template <typename Request> bool BadRequestActivator(const Request &req) {
           (url.size() >= SIZE_OF_THREE_SEGMENT_URL && url[2] != "maps" &&
            url[2] != "game" && url[3] != "join" && url[3] != "players" &&
            url[3] != "state" && url[3] != "player" && url[3] != "tick" &&
-           (url.size() == SIZE_OF_FIVE_SEGMENT_URL &&
-            url[4] != "action"))); // todo: need refactor
+           (url.size() == SIZE_OF_FIVE_SEGMENT_URL && url[4] != "action")));
 };
 
 template <typename Request, typename Send>
@@ -538,9 +537,8 @@ std::optional<size_t>
 GetRecordsHandler(const Request &req,
                   std::shared_ptr<app::Application> application, Send &&send) {
 
-  // Парсинг query-параметров start и maxItems
   size_t start = 0;
-  size_t max_items = 100; // по умолчанию
+  size_t max_items = 100;
 
   std::string target(req.target());
   size_t query_pos = target.find('?');
@@ -550,7 +548,6 @@ GetRecordsHandler(const Request &req,
     std::vector<std::string> params;
     size_t pos = 0;
 
-    // Разбиваем query по '&'
     while (pos < query.length()) {
       size_t next = query.find('&', pos);
       params.push_back(query.substr(pos, next - pos));
@@ -559,13 +556,11 @@ GetRecordsHandler(const Request &req,
       pos = next + 1;
     }
 
-    // Обрабатываем каждый параметр
     for (const auto &param : params) {
       if (param.substr(0, 6) == "start=") {
         try {
           start = std::stoull(param.substr(6));
         } catch (...) {
-          // Неверный параметр start
           StringResponse response(http::status::bad_request, req.version());
           response.set(http::field::content_type,
                        CONTENT_TYPE_APPLICATION_JSON);
@@ -580,7 +575,6 @@ GetRecordsHandler(const Request &req,
         try {
           max_items = std::stoull(param.substr(9));
           if (max_items > 100) {
-            // maxItems превышает 100
             StringResponse response(http::status::bad_request, req.version());
             response.set(http::field::content_type,
                          CONTENT_TYPE_APPLICATION_JSON);
@@ -592,7 +586,6 @@ GetRecordsHandler(const Request &req,
             return std::nullopt;
           }
         } catch (...) {
-          // Неверный параметр maxItems
           StringResponse response(http::status::bad_request, req.version());
           response.set(http::field::content_type,
                        CONTENT_TYPE_APPLICATION_JSON);

@@ -241,8 +241,7 @@ void Application::RestoreGame() {
         game_.FindMap(item.RestoreMapId()), tick_period_,
         game_.GetLootGeneratorConfig(), ioc_,
         std::chrono::milliseconds(static_cast<long long>(
-            game_.GetDefaultDogRetirementTime() * 1000.0)) // 5-й аргумент
-    );
+            game_.GetDefaultDogRetirementTime() * 1000.0)));
 
     for (auto &lost_obj_ser : item.GetLostObjectsSerialize()) {
       game_session->AddLostObject(std::move(lost_obj_ser.Restore()));

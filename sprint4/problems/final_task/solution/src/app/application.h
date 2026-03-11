@@ -63,7 +63,6 @@ public:
   void SaveGame();
 
   void SetDbPool(std::shared_ptr<PgConnectionPool> pool) { db_pool_ = pool; }
-  std::chrono::milliseconds GetCurrentGameTime() const;
 
 private:
   using GameSessionIdHasher = util::TaggedHasher<GameSession::Id>;
