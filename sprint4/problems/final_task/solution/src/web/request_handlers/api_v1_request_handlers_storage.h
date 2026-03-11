@@ -47,7 +47,7 @@ template <typename Request> bool BadRequestActivator(const Request &req) {
            url[2] != "game" && url[3] != "join" && url[3] != "players" &&
            url[3] != "state" && url[3] != "player" && url[3] != "tick" &&
            (url.size() == SIZE_OF_FIVE_SEGMENT_URL && url[4] != "action")));
-};
+}
 
 template <typename Request, typename Send>
 std::optional<size_t>
@@ -60,7 +60,7 @@ BadRequestHandler(const Request &req,
   response.keep_alive(req.keep_alive());
   send(response);
   return std::nullopt;
-};
+}
 
 template <typename Request> bool GetMapListActivator(const Request &req) {
   return IsEqualUrls(api_urls::GET_MAPS_LIST_API, req.target());
@@ -104,7 +104,7 @@ GetMapByIdHandler(const Request &req,
   response.keep_alive(req.keep_alive());
   send(response);
   return std::nullopt;
-};
+}
 
 template <typename Request, typename Send>
 std::optional<size_t>
@@ -118,7 +118,7 @@ MapNotFoundHandler(const Request &req,
   response.keep_alive(req.keep_alive());
   send(response);
   return std::nullopt;
-};
+}
 
 template <typename Request>
 bool JoinToGameInvalidJsonReqActivator(const Request &req) {
@@ -236,7 +236,7 @@ OnlyPostMethodAllowedHandler(const Request &req,
   response.keep_alive(req.keep_alive());
   send(response);
   return std::nullopt;
-};
+}
 
 template <typename Request>
 bool EmptyAuthorizationActivator(const Request &req) {
@@ -309,7 +309,7 @@ InvalidMethodHandler(const Request &req,
   response.keep_alive(req.keep_alive());
   send(response);
   return std::nullopt;
-};
+}
 
 template <typename Request> bool GetGameStateActivator(const Request &req) {
   return IsEqualUrls(api_urls::GET_GAME_STATE_API, req.target());
@@ -460,7 +460,7 @@ PageNotFoundHandler(const Request &req,
   response.keep_alive(req.keep_alive());
   send(response);
   return std::nullopt;
-};
+}
 
 template <typename Request>
 bool TimeTickInvalidMsgActivator(const Request &req) {

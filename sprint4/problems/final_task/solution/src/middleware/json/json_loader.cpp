@@ -27,7 +27,7 @@ boost::json::value ReadFile(const std::filesystem::path &json_path) {
   ss << file.rdbuf();
   boost::json::value root = boost::json::parse(ss.str());
   return root;
-};
+}
 
 model::Game LoadGame(const std::filesystem::path &json_path) {
   model::Game game;
@@ -59,6 +59,6 @@ model::Game LoadGame(const std::filesystem::path &json_path) {
     // параметр отсутствует, останется значение по умолчанию
   }
   return game;
-};
+}
 
 } // namespace json_loader

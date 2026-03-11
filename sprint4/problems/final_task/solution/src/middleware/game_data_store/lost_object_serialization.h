@@ -28,6 +28,6 @@ private:
   size_t type_;
   size_t value_;
   geom::Point2D position_;
-};
+}
 
 } // namespace game_data_ser

@@ -26,7 +26,7 @@ public:
   static ApiV1RequestHandlerExecutor &GetInstance() {
     static ApiV1RequestHandlerExecutor obj;
     return obj;
-  };
+  }
 
   bool Execute(const Request &req,
                std::shared_ptr<app::Application> application, Send &&send) {
@@ -42,7 +42,7 @@ public:
       }
     }
     return false;
-  };
+  }
 
 private:
   std::vector<RequestHandlerNode<ActivatorType, HandlerType>> rh_storage_ = {
@@ -116,6 +116,6 @@ private:
           InvalidMethodHandler)};
 
   ApiV1RequestHandlerExecutor() = default;
-};
+}
 
 } // namespace rh_storage

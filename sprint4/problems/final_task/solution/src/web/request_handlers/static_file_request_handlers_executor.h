@@ -27,7 +27,7 @@ public:
   static StaticFileRequestHandlerExecutor &GetInstance() {
     static StaticFileRequestHandlerExecutor obj;
     return obj;
-  };
+  }
 
   bool Execute(const Request &req,
                const std::filesystem::path &static_content_root, Send &&send) {
@@ -39,7 +39,7 @@ public:
       }
     }
     return false;
-  };
+  }
 
 private:
   std::vector<RequestHandlerNode<ActivatorType, HandlerType>> rh_storage_ = {
@@ -57,6 +57,6 @@ private:
           StaticContentFileNotFoundHandler)};
 
   StaticFileRequestHandlerExecutor() = default;
-};
+}
 
 } // namespace rh_storage

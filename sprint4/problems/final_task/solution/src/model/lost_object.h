@@ -26,7 +26,7 @@ private:
   Id id_;
   size_t type_;
   size_t value_{0};
-};
+}
 
 struct LostObjectHasher {
   size_t operator()(const LostObject &lost_object) const {
@@ -35,6 +35,6 @@ struct LostObjectHasher {
            std::hash<double>{}(lost_object.GetPosition().x) * sd +
            std::hash<double>{}(lost_object.GetPosition().y);
   }
-};
+}
 
 } // namespace model

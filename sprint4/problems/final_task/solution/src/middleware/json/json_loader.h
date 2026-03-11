@@ -13,6 +13,6 @@ public:
   char const *what() {
     return "Can't open file with json configuration of model.";
   }
-};
+}
 
 } // namespace json_loader

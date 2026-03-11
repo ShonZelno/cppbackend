@@ -33,7 +33,7 @@ void Game::AddMaps(const std::vector<Map> &maps) {
   for (auto item : maps) {
     AddMap(item);
   }
-};
+}
 
 const Game::Maps &Game::GetMaps() const noexcept { return maps_; }
 
@@ -42,7 +42,7 @@ const std::shared_ptr<Map> Game::FindMap(const Map::Id &id) const noexcept {
     return maps_.at(it->second);
   }
   return nullptr;
-};
+}
 
 void Game::SetDefaultDogVelocity(double velocity) {
   default_dog_velocity_ = std::abs(velocity);
@@ -51,20 +51,20 @@ void Game::SetDefaultDogVelocity(double velocity) {
       map->SetDogVelocity(default_dog_velocity_.value());
     }
   }
-};
+}
 
 double Game::GetDefaultDogVelocity() const noexcept {
   return default_dog_velocity_ ? default_dog_velocity_.value()
                                : INITIAL_DOG_VELOCITY;
-};
+}
 
 void Game::AddLootGeneratorConfig(LootGeneratorConfig cfg) {
   loot_gen_cfg_ = std::move(cfg);
-};
+}
 
 const LootGeneratorConfig &Game::GetLootGeneratorConfig() {
   return loot_gen_cfg_;
-};
+}
 
 void Game::SetDefaultBagCapacity(size_t default_bag_capacity) {
   default_bag_capacity_ = default_bag_capacity;
@@ -73,12 +73,12 @@ void Game::SetDefaultBagCapacity(size_t default_bag_capacity) {
       map->SetBagCapacity(default_bag_capacity_.value());
     }
   }
-};
+}
 
 size_t Game::GetDefaultBagCapacity() const noexcept {
   return default_bag_capacity_ ? default_bag_capacity_.value()
                                : INITIAL_BAG_CAPACITY;
-};
+}
 
 void Game::SetDefaultDogRetirementTime(double time) {
   default_dog_retirement_time_ = std::abs(time);

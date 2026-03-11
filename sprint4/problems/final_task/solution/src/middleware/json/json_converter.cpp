@@ -32,82 +32,82 @@ std::string CreateMapNotFoundResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "mapNotFound"},
                      {json_keys::RESPONSE_MESSAGE, "Map not found"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateBadRequestResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "badRequest"},
                      {json_keys::RESPONSE_MESSAGE, "Bad request"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreatePageNotFoundResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "pageNotFound"},
                      {json_keys::RESPONSE_MESSAGE, "Page not found"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateOnlyPostMethodAllowedResponse() {
   json::value msg = {
       {json_keys::RESPONSE_CODE, "invalidMethod"},
       {json_keys::RESPONSE_MESSAGE, "Only POST method is expected"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateJoinToGameInvalidArgumentResponse() {
   json::value msg = {
       {json_keys::RESPONSE_CODE, "invalidArgument"},
       {json_keys::RESPONSE_MESSAGE, "Join game request parse error"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateJoinToGameMapNotFoundResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "mapNotFound"},
                      {json_keys::RESPONSE_MESSAGE, "Map not found"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateJoinToGameEmptyPlayerNameResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "invalidArgument"},
                      {json_keys::RESPONSE_MESSAGE, "Invalid name"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateInvalidMethodResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "invalidMethod"},
                      {json_keys::RESPONSE_MESSAGE, "Invalid method"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateEmptyAuthorizationResponse() {
   json::value msg = {
       {json_keys::RESPONSE_CODE, "invalidToken"},
       {json_keys::RESPONSE_MESSAGE, "Authorization header is required"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateUnknownTokenResponse() {
   json::value msg = {
       {json_keys::RESPONSE_CODE, "unknownToken"},
       {json_keys::RESPONSE_MESSAGE, "Player token has not been found"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreatePlayerActionResponse() {
   json::object msg = {};
   return json::serialize(msg);
-};
+}
 
 std::string CreatePlayerActionInvalidActionResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "invalidArgument"},
                      {json_keys::RESPONSE_MESSAGE, "Failed to parse action"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateInvalidContentTypeResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "invalidArgument"},
                      {json_keys::RESPONSE_MESSAGE, "Invalid content type"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreatePlayersListOnMapResponse(
     const std::vector<std::shared_ptr<app::Player>> &players) {
@@ -121,7 +121,7 @@ std::string CreatePlayersListOnMapResponse(
     obj[ss.str()] = jv_item;
   }
   return json::serialize(jv);
-};
+}
 
 std::string CreateGameStateResponse(
     const std::vector<std::shared_ptr<app::Player>> &players,
@@ -164,32 +164,32 @@ std::string CreateGameStateResponse(
   res[json_keys::LOST_OBJECTS] = loots;
   jv.emplace_object() = res;
   return json::serialize(jv);
-};
+}
 
 std::string CreateJoinToGameResponse(const std::string &token,
                                      size_t player_id) {
   json::value msg = {{json_keys::RESPONSE_AUTHORISATION_TOKEN, token},
                      {json_keys::RESPONSE_PLAYER_ID, player_id}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateSetDeltaTimeResponse() {
   json::object msg = {};
   return json::serialize(msg);
-};
+}
 
 std::string CreateSetDeltaTimeInvalidMsgResponse() {
   json::value msg = {
       {json_keys::RESPONSE_CODE, "invalidArgument"},
       {json_keys::RESPONSE_MESSAGE, "Failed to parse tick request JSON"}};
   return json::serialize(msg);
-};
+}
 
 std::string CreateInvalidEndpointResponse() {
   json::value msg = {{json_keys::RESPONSE_CODE, "badRequest"},
                      {json_keys::RESPONSE_MESSAGE, "Invalid endpoint"}};
   return json::serialize(msg);
-};
+}
 
 std::optional<std::tuple<std::string, model::Map::Id>>
 ParseJoinToGameRequest(const std::string &msg) {
@@ -203,7 +203,7 @@ ParseJoinToGameRequest(const std::string &msg) {
   } catch (...) {
     return std::nullopt;
   }
-};
+}
 
 std::optional<std::string> ParsePlayerActionRequest(const std::string &msg) {
   try {
@@ -214,7 +214,7 @@ std::optional<std::string> ParsePlayerActionRequest(const std::string &msg) {
   } catch (...) {
     return std::nullopt;
   }
-};
+}
 
 std::optional<int> ParseSetDeltaTimeRequest(const std::string &msg) {
   try {
@@ -228,7 +228,7 @@ std::optional<int> ParseSetDeltaTimeRequest(const std::string &msg) {
   } catch (...) {
     return std::nullopt;
   }
-};
+}
 
 std::string
 CreateRecordsResponse(const std::vector<app::RetiredRecord> &records) {

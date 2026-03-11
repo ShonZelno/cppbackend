@@ -19,6 +19,6 @@ public:
 
 private:
   Rectangle bounds_;
-};
+}
 
 } // namespace model

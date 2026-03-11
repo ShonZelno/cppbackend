@@ -33,7 +33,7 @@ public:
     } catch (sys::system_error &ex) {
     }
     return remote_ip;
-  };
+  }
 
 protected:
   explicit SessionBase(tcp::socket &&socket) : stream_(std::move(socket)) {}
@@ -95,7 +95,7 @@ private:
   virtual void HandleRequest(HttpRequest &&request) = 0;
 
   virtual std::shared_ptr<SessionBase> GetSharedThis() = 0;
-};
+}
 
 template <typename RequestHandler>
 class Session : public SessionBase,
@@ -111,7 +111,7 @@ private:
 
   std::shared_ptr<SessionBase> GetSharedThis() override {
     return this->shared_from_this();
-  };
+  }
 
   void HandleRequest(HttpRequest &&request) override {
     SetReceivedRequestTime(boost::posix_time::microsec_clock::local_time());
@@ -126,7 +126,7 @@ private:
                        self->Write(std::move(response));
                      });
   }
-};
+}
 
 template <typename RequestHandler>
 class Listener : public std::enable_shared_from_this<Listener<RequestHandler>> {
@@ -201,7 +201,7 @@ private:
                                               request_handler_)
         ->Run();
   }
-};
+}
 
 template <typename RequestHandler>
 void ServeHttp(net::io_context &ioc, const tcp::endpoint &endpoint,

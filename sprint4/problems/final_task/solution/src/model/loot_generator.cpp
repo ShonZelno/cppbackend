@@ -7,7 +7,7 @@ namespace loot_gen {
 
 const LootGenerator::TimeInterval &LootGenerator::GetPeriod() const {
   return base_interval_;
-};
+}
 
 unsigned LootGenerator::Generate(TimeInterval time_delta, unsigned loot_count,
                                  unsigned looter_count) {

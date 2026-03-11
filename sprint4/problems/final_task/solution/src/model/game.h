@@ -36,6 +36,6 @@ private:
   std::optional<size_t> default_bag_capacity_{std::nullopt};
   LootGeneratorConfig loot_gen_cfg_;
   std::optional<double> default_dog_retirement_time_;
-};
+}
 
 } // namespace model

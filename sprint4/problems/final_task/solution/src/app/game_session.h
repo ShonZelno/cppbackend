@@ -89,6 +89,6 @@ private:
                    size_t gatherer_id);
   void DropLoot(const model::ItemDogProvider &provider, size_t item_id,
                 size_t gatherer_id);
-};
+}
 
 } // namespace app

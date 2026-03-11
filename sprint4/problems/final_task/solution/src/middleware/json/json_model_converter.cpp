@@ -11,7 +11,7 @@ LootGeneratorConfig tag_invoke(json::value_to_tag<LootGeneratorConfig>,
   config.probability =
       json::value_to<double>(jv.as_object().at(LOOT_GENERATOR_PROBABILITY));
   return config;
-};
+}
 
 void tag_invoke(json::value_from_tag, json::value &jv,
                 const LootType &loot_type) {
@@ -27,7 +27,7 @@ void tag_invoke(json::value_from_tag, json::value &jv,
     res[LOOT_TYPES_ROTATION] = json::value_from(loot_type.rotation.value());
   }
   jv.emplace_object() = res;
-};
+}
 
 LootType tag_invoke(json::value_to_tag<LootType>, const json::value &jv) {
   LootType loot_type;
@@ -50,7 +50,7 @@ LootType tag_invoke(json::value_to_tag<LootType>, const json::value &jv) {
   };
   loot_type.scale = json::value_to<double>(jv.as_object().at(LOOT_TYPES_SCALE));
   return loot_type;
-};
+}
 
 void tag_invoke(json::value_from_tag, json::value &jv,
                 const Building &building) {
@@ -58,7 +58,7 @@ void tag_invoke(json::value_from_tag, json::value &jv,
         {BUILDING_Y, json::value_from(building.GetBounds().position.y)},
         {BUILDING_WIDTH, json::value_from(building.GetBounds().size.width)},
         {BUILDING_HEIGHT, json::value_from(building.GetBounds().size.height)}};
-};
+}
 
 Building tag_invoke(json::value_to_tag<Building>, const json::value &jv) {
   Point point;
@@ -68,7 +68,7 @@ Building tag_invoke(json::value_to_tag<Building>, const json::value &jv) {
   size.width = json::value_to<int>(jv.as_object().at(BUILDING_WIDTH));
   size.height = json::value_to<int>(jv.as_object().at(BUILDING_HEIGHT));
   return Building(Rectangle(point, size));
-};
+}
 
 void tag_invoke(json::value_from_tag, json::value &jv, const Office &office) {
   jv = {{OFFICE_ID, json::value_from(*(office.GetId()))},
@@ -76,7 +76,7 @@ void tag_invoke(json::value_from_tag, json::value &jv, const Office &office) {
         {OFFICE_Y, json::value_from(office.GetPosition().y)},
         {OFFICE_OFFSET_X, json::value_from(office.GetOffset().dx)},
         {OFFICE_OFFSET_Y, json::value_from(office.GetOffset().dy)}};
-};
+}
 
 Office tag_invoke(json::value_to_tag<Office>, const json::value &jv) {
   Office::Id id{json::value_to<std::string>(jv.as_object().at(OFFICE_ID))};
@@ -87,7 +87,7 @@ Office tag_invoke(json::value_to_tag<Office>, const json::value &jv) {
   offset.dx = json::value_to<int>(jv.as_object().at(OFFICE_OFFSET_X));
   offset.dy = json::value_to<int>(jv.as_object().at(OFFICE_OFFSET_Y));
   return Office(id, position, offset);
-};
+}
 
 void tag_invoke(json::value_from_tag, json::value &jv, const Road &road) {
   if (road.IsHorizontal()) {
@@ -99,7 +99,7 @@ void tag_invoke(json::value_from_tag, json::value &jv, const Road &road) {
           {ROAD_YO, json::value_from(road.GetStart().y)},
           {ROAD_Y1, json::value_from(road.GetEnd().y)}};
   }
-};
+}
 
 Road tag_invoke(json::value_to_tag<Road>, const json::value &jv) {
   Point start;
@@ -113,7 +113,7 @@ Road tag_invoke(json::value_to_tag<Road>, const json::value &jv) {
     end = json::value_to<int>(jv.as_object().at(ROAD_Y1));
     return Road(Road::VERTICAL, start, end);
   }
-};
+}
 
 void tag_invoke(json::value_from_tag, json::value &jv, const Map &map) {
   jv = {{MAP_ID, json::value_from(*(map.GetId()))},
@@ -122,7 +122,7 @@ void tag_invoke(json::value_from_tag, json::value &jv, const Map &map) {
         {BUILDINGS, json::value_from(map.GetBuildings())},
         {OFFICES, json::value_from(map.GetOffices())},
         {LOOT_TYPES, json::value_from(map.GetLootTypes())}};
-};
+}
 
 Map tag_invoke(json::value_to_tag<Map>, const json::value &jv) {
   Map::Id id{json::value_to<std::string>(jv.as_object().at(MAP_ID))};
@@ -156,6 +156,6 @@ Map tag_invoke(json::value_to_tag<Map>, const json::value &jv) {
   } catch (boost::wrapexcept<std::out_of_range> &e) {
   }
   return map;
-};
+}
 
 } // namespace model

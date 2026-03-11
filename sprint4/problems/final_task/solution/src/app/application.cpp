@@ -12,12 +12,12 @@ using namespace std::literals;
 
 const model::Game::Maps &Application::ListMap() const noexcept {
   return game_.GetMaps();
-};
+}
 
 const std::shared_ptr<model::Map>
 Application::FindMap(const model::Map::Id &id) const noexcept {
   return game_.FindMap(id);
-};
+}
 
 std::tuple<authentication::Token, Player::Id>
 Application::JoinGame(const std::string &player_name,
@@ -30,7 +30,7 @@ Application::JoinGame(const std::string &player_name,
   if (!game_session) {
     game_session = std::make_shared<GameSession>(
         game_.FindMap(id), tick_period_, game_.GetLootGeneratorConfig(), ioc_,
-        std::chrono::milliseconds(static_cast<long long>(
+        std::chrono::milliseconds(static_cast<int64_t>(
             game_.GetDefaultDogRetirementTime() * 1000.0)));
     AddGameSession(game_session);
     game_session->SetRetiredHandler(
@@ -43,14 +43,14 @@ Application::JoinGame(const std::string &player_name,
   BoundPlayerAndGameSession(player, game_session);
   game_session_to_token_player_pair_[game_session][token] = player;
   return std::tie(token, player->GetId());
-};
+}
 
 std::shared_ptr<Player>
 Application::CreatePlayer(const std::string &player_name) {
   auto player = std::make_shared<Player>(player_name);
   players_.push_back(player);
   return player;
-};
+}
 
 void Application::BoundPlayerAndGameSession(
     std::shared_ptr<Player> player, std::shared_ptr<GameSession> session) {
@@ -65,6 +65,7 @@ void Application::BoundPlayerAndGameSession(
     dog_id_to_player_[dog->GetId()] = player;
   }
 }
+
 const std::vector<std::shared_ptr<Player>> &
 Application::GetPlayersFromGameSession(const authentication::Token &token) {
   static const std::vector<std::shared_ptr<Player>> emptyPlayerList;
@@ -74,23 +75,23 @@ Application::GetPlayersFromGameSession(const authentication::Token &token) {
     return emptyPlayerList;
   }
   return session_id_to_players_[session_id];
-};
+}
 
-bool Application::IsExistPlayer(const authentication::Token &token) {
+bool Application::IsExistPlayer(const authentication::Token &token) const {
   return static_cast<bool>(player_tokens_.FindPlayerBy(token));
-};
+}
 
 void Application::SetPlayerAction(const authentication::Token &token,
-                                  model::Direction direction) {
+                                  model::Direction direction) const {
   auto player = player_tokens_.FindPlayerBy(token);
   auto dog = player->GetDog().lock();
   double velocity = player->GetGameSession()->GetMap()->GetDogVelocity();
   dog->SetAction(direction, velocity);
-};
+}
 
-bool Application::IsManualTimeManagement() {
+bool Application::IsManualTimeManagement() const {
   return tick_period_.count() == 0;
-};
+}
 
 void Application::UpdateGameState(const std::chrono::milliseconds &delta_time) {
   total_game_time_ += delta_time;
@@ -111,7 +112,7 @@ void Application::UpdateGameState(const std::chrono::milliseconds &delta_time) {
     flush_future.get();
   }
   SaveGameState(delta_time);
-};
+}
 
 void Application::AddGameSession(std::shared_ptr<GameSession> session) {
   const size_t index = sessions_.size();
@@ -129,7 +130,7 @@ void Application::AddGameSession(std::shared_ptr<GameSession> session) {
       throw;
     }
   }
-};
+}
 
 std::shared_ptr<GameSession>
 Application::FindGameSessionBy(const model::Map::Id &id) const noexcept {
@@ -138,7 +139,7 @@ Application::FindGameSessionBy(const model::Map::Id &id) const noexcept {
     return sessions_.at(it->second);
   }
   return nullptr;
-};
+}
 
 std::shared_ptr<GameSession> Application::FindGameSessionBy(
     const authentication::Token &token) const noexcept {
@@ -147,17 +148,20 @@ std::shared_ptr<GameSession> Application::FindGameSessionBy(
     return it->second;
   }
   return nullptr;
-};
+}
 
 const std::vector<std::shared_ptr<GameSession>> &Application::GetSessions() {
   return sessions_;
-};
+}
 
 void Application::RestoreGameState(saving::SavingSettings saving_settings) {
   saving_settings_ = std::move(saving_settings);
   RestoreGame();
-  if (!(saving_settings_.state_file_path && saving_settings_.period) ||
-      IsManualTimeManagement()) {
+  bool has_state_file = saving_settings_.state_file_path.has_value();
+  bool has_period = saving_settings_.period.has_value();
+  bool can_auto_save =
+      has_state_file && has_period && !IsManualTimeManagement();
+  if (!can_auto_save) {
     return;
   }
   save_game_ticker_ = std::make_shared<time_m::Ticker>(
@@ -166,7 +170,7 @@ void Application::RestoreGameState(saving::SavingSettings saving_settings) {
         self->SaveGame();
       });
   save_game_ticker_->Start();
-};
+}
 
 void Application::SaveGameState(const std::chrono::milliseconds &delta_time) {
   static int period =
@@ -179,7 +183,7 @@ void Application::SaveGameState(const std::chrono::milliseconds &delta_time) {
     SaveGame();
     period = saving_settings_.period.value().count();
   }
-};
+}
 
 void Application::SaveGame() {
   if (!saving_settings_.state_file_path)
@@ -195,7 +199,7 @@ void Application::SaveGame() {
 
   auto sessions_ser = GetSerializedData();
   oarchive << sessions_ser;
-};
+}
 
 std::vector<game_data_ser::GameSessionSerialization>
 Application::GetSerializedData() {
@@ -213,7 +217,8 @@ Application::GetSerializedData() {
     sessions_ser.push_back(std::move(res_future.get()));
   };
   return sessions_ser;
-};
+}
+
 void Application::RestoreGame() {
   if (!saving_settings_.state_file_path)
     return;
@@ -240,7 +245,7 @@ void Application::RestoreGame() {
     auto game_session = std::make_shared<GameSession>(
         game_.FindMap(item.RestoreMapId()), tick_period_,
         game_.GetLootGeneratorConfig(), ioc_,
-        std::chrono::milliseconds(static_cast<long long>(
+        std::chrono::milliseconds(static_cast<int64_t>(
             game_.GetDefaultDogRetirementTime() * 1000.0)));
 
     for (auto &lost_obj_ser : item.GetLostObjectsSerialize()) {

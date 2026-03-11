@@ -44,6 +44,6 @@ private:
   double probability_;
   TimeInterval time_without_loot_{};
   RandomGenerator random_generator_;
-};
+}
 
 } // namespace loot_gen

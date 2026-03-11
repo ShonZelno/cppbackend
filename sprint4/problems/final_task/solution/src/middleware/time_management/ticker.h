@@ -37,6 +37,6 @@ private:
 
   void ScheduleTick();
   void OnTick(sys::error_code ec);
-};
+}
 
 } // namespace time_m

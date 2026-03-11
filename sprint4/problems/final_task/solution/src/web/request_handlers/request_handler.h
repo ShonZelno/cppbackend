@@ -43,6 +43,6 @@ public:
 private:
   std::shared_ptr<app::Application> application_;
   fs::path static_content_root_path_;
-};
+}
 
 } // namespace http_handler

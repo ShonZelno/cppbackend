@@ -63,6 +63,6 @@ private:
 
   bool IsValidPositionOnRoad(const Road &road, const geom::Point2D &position);
   void CopyContent(const Roads &roads);
-};
+}
 
 } // namespace model

@@ -30,7 +30,7 @@ public:
         [](const auto &id_to_lost_object) -> LostObjectSerialization {
           return *id_to_lost_object.second;
         });
-  };
+  }
 
   [[nodiscard]] model::Map::Id RestoreMapId() const;
   [[nodiscard]] const std::vector<LostObjectSerialization> &
@@ -49,6 +49,6 @@ private:
   std::string map_id_;
   std::vector<PlayerSerialization> players_ser_;
   std::vector<LostObjectSerialization> lost_objects_;
-};
+}
 
 } // namespace game_data_ser

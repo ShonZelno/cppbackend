@@ -12,6 +12,6 @@ void InitLogger() {
                               boost::log::keywords::format =
                                   &StringFormatter //"%Message%"
   );
-};
+}
 
 } // namespace logware

@@ -48,7 +48,7 @@ bool StaticContentFileNotFoundActivator(const Request &req,
     }
   }
   return !fs::exists(static_content);
-};
+}
 
 template <typename Request, typename Send>
 void StaticContentFileNotFoundHandler(const Request &req,
@@ -60,7 +60,7 @@ void StaticContentFileNotFoundHandler(const Request &req,
   response.content_length(response.body().size());
   response.keep_alive(req.keep_alive());
   send(response);
-};
+}
 
 template <typename Request>
 bool LeaveStaticContentRootDirActivator(const Request &req,
@@ -70,7 +70,7 @@ bool LeaveStaticContentRootDirActivator(const Request &req,
   fs::path rel_path{pathStr};
   static_content = fs::weakly_canonical(static_content / rel_path);
   return !fs_utils::IsSubPath(static_content, static_content_root);
-};
+}
 
 template <typename Request, typename Send>
 void LeaveStaticContentRootDirHandler(const Request &req,
@@ -82,13 +82,13 @@ void LeaveStaticContentRootDirHandler(const Request &req,
   response.content_length(response.body().size());
   response.keep_alive(req.keep_alive());
   send(response);
-};
+}
 
 template <typename Request>
 bool GetStaticContentFileActivator(const Request &req,
                                    const fs::path &static_content_root) {
   return true;
-};
+}
 
 template <typename Request, typename Send>
 void GetStaticContentFileHandler(const Request &req,
@@ -126,6 +126,6 @@ void GetStaticContentFileHandler(const Request &req,
 
   response.prepare_payload();
   send(response);
-};
+}
 
 } // namespace rh_storage

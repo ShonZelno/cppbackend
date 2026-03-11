@@ -48,15 +48,16 @@ public:
 
 private:
   Value value_;
-};
+}
 
 // Хешер для Tagged-типа, чтобы Tagged-объекты можно было хранить в
 // unordered-контейнерах
-template <typename TaggedValue> struct TaggedHasher {
+template <typename TaggedValue>
+struct TaggedHasher {
   size_t operator()(const TaggedValue &value) const {
     // Возвращает хеш значения, хранящегося внутри value
     return std::hash<typename TaggedValue::ValueType>{}(*value);
   }
-};
+}
 
 } // namespace util

@@ -31,6 +31,6 @@ public:
 private:
   Items items_;
   Dogs dogs_;
-};
+}
 
 } // namespace model

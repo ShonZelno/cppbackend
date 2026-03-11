@@ -15,14 +15,14 @@ Roadmap::Roadmap(const Roadmap &other) { CopyContent(other.roads_); };
 Roadmap::Roadmap(Roadmap &&other) {
   matrix_map_ = std::move(other.matrix_map_);
   roads_ = std::move(other.roads_);
-};
+}
 
 Roadmap &Roadmap::operator=(const Roadmap &other) {
   if (this != &other) {
     CopyContent(other.roads_);
   }
   return *this;
-};
+}
 
 Roadmap &Roadmap::operator=(Roadmap &&other) {
   if (this != &other) {
@@ -30,7 +30,7 @@ Roadmap &Roadmap::operator=(Roadmap &&other) {
     roads_ = std::move(other.roads_);
   }
   return *this;
-};
+}
 
 void Roadmap::AddRoad(const Road &road) {
   const auto SCALLED_OFFSET =
@@ -68,7 +68,7 @@ void Roadmap::AddRoad(const Road &road) {
       }
     }
   }
-};
+}
 
 const Roadmap::Roads &Roadmap::GetRoads() const noexcept { return roads_; };
 
@@ -97,7 +97,7 @@ Roadmap::GetValidMove(const geom::Point2D &old_position,
     position = GetFarestPoinOfRoute(dest.value(), old_position, old_velocity);
   }
   return std::tie(position, velocity);
-};
+}
 
 geom::Point2D Roadmap::GenerateValidRandomPosition() const {
   geom::Point2D pos;
@@ -113,7 +113,7 @@ geom::Point2D Roadmap::GenerateValidRandomPosition() const {
     pos.x = road.GetStart().x;
   }
   return pos;
-};
+}
 
 std::optional<const Roadmap::MatrixMapCoord>
 Roadmap::GetDestinationRoadsOfRoute(std::optional<const MatrixMapCoord> start,
@@ -167,7 +167,7 @@ Roadmap::GetDestinationRoadsOfRoute(std::optional<const MatrixMapCoord> start,
     return current_coord;
   }
   return std::nullopt;
-};
+}
 
 std::optional<const Roadmap::MatrixMapCoord>
 Roadmap::GetCoordinatesOfPosition(const geom::Point2D &position) {
@@ -186,7 +186,7 @@ Roadmap::GetCoordinatesOfPosition(const geom::Point2D &position) {
     }
   }
   return std::nullopt;
-};
+}
 
 bool Roadmap::IsCrossedSets(const std::unordered_set<size_t> &lhs,
                             const std::unordered_set<size_t> &rhs) {
@@ -203,7 +203,7 @@ bool Roadmap::ValidateCoordinates(const MatrixMapCoord &coordinates) {
     return matrix_map_[coordinates.x].contains(coordinates.y);
   }
   return false;
-};
+}
 
 const geom::Point2D
 Roadmap::GetFarestPoinOfRoute(const MatrixMapCoord &roads_coord,
@@ -224,7 +224,7 @@ Roadmap::GetFarestPoinOfRoute(const MatrixMapCoord &roads_coord,
     }
   }
   return res_position;
-};
+}
 
 const std::unordered_map<Direction, geom::Point2D>
 Roadmap::MatrixCoordinateToPosition(const MatrixMapCoord &coord,
@@ -271,7 +271,7 @@ bool Roadmap::IsValidPosition(const std::unordered_set<size_t> &roads_ind,
     }
   }
   return false;
-};
+}
 
 bool Roadmap::IsValidPositionOnRoad(const Road &road,
                                     const geom::Point2D &position) {
@@ -303,12 +303,12 @@ bool Roadmap::IsValidPositionOnRoad(const Road &road,
          ((position.y > start_y) ||
           (std::abs(position.y - start_y) < EPSILON)) &&
          ((position.y < end_y) || (std::abs(position.y - end_y) < EPSILON));
-};
+}
 
 void Roadmap::CopyContent(const Roadmap::Roads &roads) {
   for (auto &road : roads) {
     AddRoad(road);
   }
-};
+}
 
 } // namespace model

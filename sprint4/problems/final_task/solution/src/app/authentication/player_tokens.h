@@ -43,6 +43,6 @@ private:
     std::uniform_int_distribution<std::mt19937_64::result_type> dist;
     return dist(random_device_);
   }()};
-};
+}
 
 } // namespace authentication

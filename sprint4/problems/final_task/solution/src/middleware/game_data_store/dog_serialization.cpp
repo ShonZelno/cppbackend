@@ -13,6 +13,6 @@ model::Dog DogSerialization::Restore() const {
             std::make_shared<model::LostObject>(lost_obj_ser.Restore()));
       });
   return dog;
-};
+}
 
 } // namespace game_data_ser

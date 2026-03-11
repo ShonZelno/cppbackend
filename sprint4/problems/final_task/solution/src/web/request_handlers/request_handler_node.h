@@ -30,22 +30,22 @@ public:
     } else {
       return not_found_handler_;
     }
-  };
+  }
 
   Handler GetEmergeHandlerByIndex(size_t index) {
     if (index < emerge_handlers_.size()) {
       return emerge_handlers_[index];
     }
     return nullptr;
-  };
+  }
 
-  Activator &GetActivator() { return activator_; };
+  Activator &GetActivator() { return activator_; }
 
 private:
   Activator activator_;
   std::unordered_map<http::verb, Handler> handlers_;
   Handler not_found_handler_;
   std::vector<Handler> emerge_handlers_;
-};
+}
 
 } // namespace rh_storage

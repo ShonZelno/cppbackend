@@ -71,7 +71,7 @@ private:
 
   std::optional<double> dog_velocity_{std::nullopt};
   std::optional<size_t> bag_capacity_{std::nullopt};
-};
+}
 
 class EmptyLootTypesOnMapException : public std::exception {
 public:
@@ -85,6 +85,6 @@ public:
 
 private:
   std::string map_id_;
-};
+}
 
 } // namespace model

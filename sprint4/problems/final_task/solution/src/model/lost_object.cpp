@@ -2,16 +2,16 @@
 
 namespace model {
 
-const LostObject::Id &LostObject::GetId() const { return id_; };
+const LostObject::Id &LostObject::GetId() const { return id_; }
 
-void LostObject::SetId(const LostObject::Id &id) { id_ = id; };
+void LostObject::SetId(const LostObject::Id &id) { id_ = id; }
 
-size_t LostObject::GetType() const { return type_; };
+size_t LostObject::GetType() const { return type_; }
 
-void LostObject::SetType(size_t type) { type_ = type; };
+void LostObject::SetType(size_t type) { type_ = type; }
 
-size_t LostObject::GetValue() const { return value_; };
+size_t LostObject::GetValue() const { return value_; }
 
-void LostObject::SetValue(size_t value) { value_ = value; };
+void LostObject::SetValue(size_t value) { value_ = value; }
 
 } // namespace model

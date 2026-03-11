@@ -30,19 +30,19 @@ public:
   Item(geom::Point2D position, double width)
       : position_(std::move(position)), width_(width) {}
 
-  virtual const geom::Point2D &GetPosition() const { return position_; };
+  virtual const geom::Point2D &GetPosition() const { return position_; }
 
   virtual void SetPosition(geom::Point2D position) {
     position_ = std::move(position);
-  };
+  }
 
-  virtual const double GetWidth() const { return width_; };
-  virtual void SetWidth(double width) { width_ = width; };
+  virtual const double GetWidth() const { return width_; }
+  virtual void SetWidth(double width) { width_ = width; }
 
 private:
   geom::Point2D position_;
   double width_;
-};
+}
 
 struct Gatherer {
   geom::Point2D start_pos;

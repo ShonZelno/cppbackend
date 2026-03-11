@@ -17,9 +17,7 @@ const Map::Roads &Map::GetRoads() const noexcept { return roadmap_.GetRoads(); }
 
 const Map::Offices &Map::GetOffices() const noexcept { return offices_; }
 
-const Map::LootTypes &Map::GetLootTypes() const noexcept {
-  return loot_types_;
-};
+const Map::LootTypes &Map::GetLootTypes() const noexcept { return loot_types_; }
 
 void Map::AddRoad(const Road &road) { roadmap_.AddRoad(road); }
 
@@ -63,21 +61,21 @@ void Map::AddOffices(const Offices &offices) {
 
 void Map::SetDogVelocity(const double velocity) {
   dog_velocity_ = std::abs(velocity);
-};
+}
 
 double Map::GetDogVelocity() const noexcept {
   return dog_velocity_ ? dog_velocity_.value() : INITIAL_DOG_VELOCITY;
-};
+}
 
 void Map::AddLootType(const LootType &loot_type) {
   loot_types_.emplace_back(loot_type);
-};
+}
 
 void Map::AddLootTypes(const Map::LootTypes &loot_types) {
   for (auto item : loot_types) {
     AddLootType(item);
   }
-};
+}
 
 std::tuple<geom::Point2D, Velocity>
 Map::GetValidMove(const geom::Point2D &old_position,
@@ -85,22 +83,20 @@ Map::GetValidMove(const geom::Point2D &old_position,
                   const Velocity &old_velocity) {
   return roadmap_.GetValidMove(old_position, potential_new_position,
                                old_velocity);
-};
+}
 
 geom::Point2D Map::GenerateRandomPosition() const {
   return roadmap_.GenerateValidRandomPosition();
-};
+}
 
-size_t Map::GetNumberOfLootTypes() const noexcept {
-  return loot_types_.size();
-};
+size_t Map::GetNumberOfLootTypes() const noexcept { return loot_types_.size(); }
 
-const LootType &Map::GetLootTypeBy(size_t id) { return loot_types_[id]; };
+const LootType &Map::GetLootTypeBy(size_t id) { return loot_types_[id]; }
 
-void Map::SetBagCapacity(size_t bag_capacity) { bag_capacity_ = bag_capacity; };
+void Map::SetBagCapacity(size_t bag_capacity) { bag_capacity_ = bag_capacity; }
 
 size_t Map::GetBagCapacity() const noexcept {
   return bag_capacity_ ? bag_capacity_.value() : INITIAL_BAG_CAPACITY;
-};
+}
 
 } // namespace model

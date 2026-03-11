@@ -20,7 +20,7 @@ public:
         dog.GetBag(), std::back_inserter(bag_),
         [](std::shared_ptr<model::LostObject> lost_object)
             -> LostObjectSerialization { return *lost_object; });
-  };
+  }
 
   [[nodiscard]] model::Dog Restore() const;
 
@@ -47,6 +47,6 @@ private:
   size_t bag_capacity_{0};
   std::vector<LostObjectSerialization> bag_;
   size_t idle_time_;
-};
+}
 
 } // namespace game_data_ser

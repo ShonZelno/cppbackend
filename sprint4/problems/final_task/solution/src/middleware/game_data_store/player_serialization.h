@@ -38,6 +38,6 @@ private:
   DogSerialization dog_ser_;
   std::string token_;
   size_t join_time_;
-};
+}
 
 } // namespace game_data_ser

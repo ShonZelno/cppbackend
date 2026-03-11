@@ -9,6 +9,6 @@ model::LostObject LostObjectSerialization::Restore() const {
   lost_object.SetValue(value_);
   lost_object.SetPosition(position_);
   return lost_object;
-};
+}
 
 } // namespace game_data_ser

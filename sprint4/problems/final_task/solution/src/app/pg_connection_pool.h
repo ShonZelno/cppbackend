@@ -18,4 +18,4 @@ private:
   std::queue<std::unique_ptr<pqxx::connection>> connections_;
   std::mutex mutex_;
   std::condition_variable cv_;
-};
+}

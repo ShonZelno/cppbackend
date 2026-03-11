@@ -51,6 +51,6 @@ using namespace std::literals;
   }
 
   return args;
-};
+}
 
 } // namespace prog_opt

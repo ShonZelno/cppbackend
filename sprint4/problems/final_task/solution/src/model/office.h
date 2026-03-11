@@ -27,6 +27,6 @@ public:
 private:
   Id id_;
   Offset offset_;
-};
+}
 
 } // namespace model

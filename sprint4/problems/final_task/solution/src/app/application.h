@@ -48,10 +48,10 @@ public:
   JoinGame(const std::string &player_name, const model::Map::Id &id);
   const std::vector<std::shared_ptr<Player>> &
   GetPlayersFromGameSession(const authentication::Token &token);
-  bool IsExistPlayer(const authentication::Token &token);
+  bool IsExistPlayer(const authentication::Token &token) const;
   void SetPlayerAction(const authentication::Token &token,
-                       model::Direction direction);
-  bool IsManualTimeManagement();
+                       model::Direction direction) const;
+  bool IsManualTimeManagement() const;
   void UpdateGameState(const std::chrono::milliseconds &delta_time);
   void AddGameSession(std::shared_ptr<GameSession> session);
   std::shared_ptr<GameSession>
@@ -113,6 +113,6 @@ private:
   void RestoreGame();
 
   using DogIdHasher = util::TaggedHasher<model::Dog::Id>;
-};
+}
 
 } // namespace app

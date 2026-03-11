@@ -21,14 +21,16 @@ public:
   using BagType = std::vector<std::shared_ptr<LostObject>>;
 
   Dog(std::string name, size_t bag_capacity)
-      : id_(Id{Dog::max_id_cont_++}), name_(name),
-        bag_capacity_(bag_capacity){};
+      : id_(Id{Dog::max_id_cont_++}), name_(name), bag_capacity_(bag_capacity) {
+  }
+
   Dog(Id id, std::string name, size_t bag_capacity)
       : id_(id), name_(name), bag_capacity_(bag_capacity) {
     if (*id_ >= Dog::max_id_cont_) {
       Dog::max_id_cont_ = *id_ + 1;
     }
-  };
+  }
+
   Dog(const Dog &other) = default;
   Dog(Dog &&other) = default;
   Dog &operator=(const Dog &other) = default;
@@ -54,8 +56,8 @@ public:
   const BagType &GetBag() const;
   size_t GetBagCapacity() const;
   void CollectLostObject(std::shared_ptr<LostObject> loot);
-  bool IsFullBag();
-  bool IsEmptyBag();
+  bool IsFullBag() const;
+  bool IsEmptyBag() const;
   void DropLostObjectsFromBag();
 
   const size_t GetScore() const;
@@ -89,6 +91,6 @@ private:
   std::chrono::milliseconds idle_time_accumulated_{0};
 
   void AddScore(size_t score);
-};
+}
 
 } // namespace model

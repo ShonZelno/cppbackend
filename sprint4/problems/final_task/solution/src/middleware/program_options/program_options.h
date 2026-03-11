@@ -18,11 +18,11 @@ struct Args {
 class ConfigFileNotSpecifiedException : public std::exception {
 public:
   char const *what() { return "Config file have not been specified."; }
-};
+}
 
 class StaticContentPathNotSpecifiedException : public std::exception {
 public:
   char const *what() { return "Static content path is not specified."; }
-};
+}
 
 } // namespace prog_opt

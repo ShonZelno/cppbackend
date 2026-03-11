@@ -27,29 +27,29 @@ public:
       }
       dogs_.push_back(dog);
     }
-  };
+  }
 
   virtual ~DogProvider() = default;
 
-  size_t ItemsCount() const override { return items_.size(); };
+  size_t ItemsCount() const override { return items_.size(); }
 
   collision_detector::Item GetItem(size_t idx) const override {
     return items_[idx]->AsItem();
-  };
+  }
 
-  size_t GatherersCount() const override { return dogs_.size(); };
+  size_t GatherersCount() const override { return dogs_.size(); }
 
   collision_detector::Gatherer GetGatherer(size_t idx) const override {
     return dogs_[idx]->AsGatherer();
-  };
+  }
 
-  const Id &GetItemId(size_t idx) const { return items_[idx]->GetId(); };
+  const Id &GetItemId(size_t idx) const { return items_[idx]->GetId(); }
 
-  const Dog::Id &GetDogId(size_t idx) const { return dogs_[idx]->GetId(); };
+  const Dog::Id &GetDogId(size_t idx) const { return dogs_[idx]->GetId(); }
 
 private:
   std::vector<std::shared_ptr<T>> items_;
   std::vector<std::shared_ptr<Dog>> dogs_;
-};
+}
 
 } // namespace model

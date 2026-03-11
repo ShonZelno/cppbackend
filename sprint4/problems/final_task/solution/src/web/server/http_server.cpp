@@ -27,7 +27,7 @@ void SessionBase::Read() {
       stream_, buffer_, request_,
       // По окончании операции будет вызван метод OnRead
       beast::bind_front_handler(&SessionBase::OnRead, GetSharedThis()));
-};
+}
 
 void SessionBase::OnRead(beast::error_code ec,
                          [[maybe_unused]] std::size_t bytes_read) {
@@ -40,7 +40,7 @@ void SessionBase::OnRead(beast::error_code ec,
     return error_report::ReportError(ec, "read"sv);
   }
   HandleRequest(std::move(request_));
-};
+}
 
 void SessionBase::OnWrite(bool close, beast::error_code ec,
                           [[maybe_unused]] std::size_t bytes_written) {
